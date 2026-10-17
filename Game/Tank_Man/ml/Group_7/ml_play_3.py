@@ -180,8 +180,8 @@ class MLPlay:
             else:
                 # 如果找不到有效的敵人，則使用預設目標（例如保持原位置或其他策略）
                 print("找不到存活的敵人，採取預設策略")
-                self.target_x = scene_info[self.player].get("x", 0)
-                self.target_y = -scene_info[self.player].get("y", 0)
+                self.target_x = scene_info["x"]
+                self.target_y = -scene_info["y"]
 
 
 
@@ -201,7 +201,8 @@ class MLPlay:
             if(action != self.last_action and (action==3 or action ==4) and (self.last_action==3 or self.last_action==4)):
                 action=self.last_action
             self.last_action=action
-            command = COMMAND_CHASE[action]
+            # 回傳複本：遊戲會 pop() 掉指令，直接回傳表裡的 list 會把 COMMAND_CHASE 清空
+            command = list(COMMAND_CHASE[action])
         else:
             command = [SHOOT]
 
